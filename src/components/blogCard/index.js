@@ -14,7 +14,7 @@ export const BlogCard = ({ blog }) => {
 
   const handleComment = () => {};
   return (
-    <div className="border border-slate-300 p-4 rounded">
+    <div className="mx-4 border border-slate-300 p-4 rounded">
       <div className="flex">
         {blog.profile_picture ? (
           <div></div>
@@ -32,7 +32,7 @@ export const BlogCard = ({ blog }) => {
         </div>
       </div>
       <div className="pl-16">
-        <h3 className="text-3xl py-2 font-medium">{blog.title}</h3>
+        <h3 className="text-2xl py-2 font-medium md:text-3xl">{blog.title}</h3>
         {blog.tags.length > 0 ? <div></div> : null}
         <div className="flex justify-end">
           <div

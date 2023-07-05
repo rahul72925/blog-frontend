@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/store/useStore";
 import { toast } from "react-toastify";
+import { UserIconForHeader } from "./userIconForHeader";
 
 export const Header = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ export const Header = () => {
       </div>
       <div className="col-span-2 flex justify-center items-center sm:col-span-1">
         {isAuthenticated ? (
-          <Button onClick={handleButtonClick}>Logout</Button>
+          <UserIconForHeader />
         ) : (
           <Button onClick={handleButtonClick}>Login</Button>
         )}

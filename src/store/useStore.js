@@ -6,6 +6,7 @@ export const useStore = create((set) => ({
   isAuthenticated: false,
   isAuthenticating: true,
   userId: null,
+  userData: null,
   login: (token) => {
     if (!token) {
       return set(() => ({ isAuthenticated: false, isAuthenticating: false }));
@@ -16,7 +17,8 @@ export const useStore = create((set) => ({
     return set(() => ({
       isAuthenticated: true,
       isAuthenticating: false,
-      userId: decoded.id,
+      userId: decoded.user_data.id,
+      userData: decoded.user_data,
     }));
   },
   logout: async (cb) => {
@@ -27,7 +29,8 @@ export const useStore = create((set) => ({
     })
       .then(() => {
         cb();
-        set(() => ({ isAuthenticated: false, userId: null }));
+        localStorage.removeItem("token");
+        set(() => ({ isAuthenticated: false, userId: null, userData: null }));
       })
       .catch((error) => {
         console.log("logout error", error);
