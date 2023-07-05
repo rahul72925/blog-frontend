@@ -5,12 +5,20 @@ import { Button } from "./button";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useStore } from "@/store/useStore";
+import { toast } from "react-toastify";
 
 export const Header = () => {
   const router = useRouter();
+  const [isAuthenticated, logout] = useStore((state) => [
+    state.isAuthenticated,
+    state.logout,
+  ]);
 
-  const handleLogin = () => {
-    router.push("/login");
+  const handleButtonClick = () => {
+    isAuthenticated
+      ? logout(() => toast.success("Logout successfully"))
+      : router.push("/login");
   };
 
   return (
@@ -21,7 +29,11 @@ export const Header = () => {
         </Link>
       </div>
       <div className="col-span-2 flex justify-center items-center sm:col-span-1">
-        <Button onClick={handleLogin}>Login</Button>
+        {isAuthenticated ? (
+          <Button onClick={handleButtonClick}>Logout</Button>
+        ) : (
+          <Button onClick={handleButtonClick}>Login</Button>
+        )}
       </div>
     </header>
   );
