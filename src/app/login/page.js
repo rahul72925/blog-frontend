@@ -42,6 +42,7 @@ export default function Login() {
           [currentLoginBy]: cred.fieldValue,
           password: cred.password,
         },
+        withCredentials: true,
       });
       if (data.success) {
         // localStorage.setItem("token", data.data.token);
@@ -100,19 +101,9 @@ export default function Login() {
           <Button
             onClick={handleLoginClick}
             className={`${isLoading ? "cursor-not-allowed opacity-20" : ""}`}
+            isLoading={isLoading}
           >
-            {isLoading ? (
-              <div
-                className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                role="status"
-              >
-                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                  Loading...
-                </span>
-              </div>
-            ) : (
-              "Login"
-            )}
+            Login
           </Button>
         </div>
         <footer className="text-center mt-10">
