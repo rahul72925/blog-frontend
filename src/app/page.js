@@ -1,8 +1,12 @@
 import { BlogCard } from "@/components/blogCard";
 import { BlogSearch } from "@/components/blogSearch";
+import { cookies } from "next/headers";
 
 async function getData() {
-  const res = await fetch("http://localhost:4002/api/blog/get");
+  const res = await fetch("http://localhost:4002/api/blog/get", {
+    cache: "no-store",
+    headers: { Cookie: cookies().toString() },
+  });
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
