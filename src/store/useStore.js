@@ -28,6 +28,7 @@ export const useStore = create((set, get) => ({
     axios({
       method: "POST",
       url: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/logout`,
+      withCredentials: true,
     })
       .then(() => {
         cb();

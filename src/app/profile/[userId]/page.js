@@ -1,15 +1,14 @@
 import { WordIcon } from "@/components";
 import { BlogCard } from "@/components/blogCard";
-import { useStore } from "@/store/useStore";
+import { cookies } from "next/headers";
 
 async function getData(userId) {
   const res = await fetch(
     `http://localhost:4002/api/user?userId=${userId}&withBlogs=true`,
-    { cache: "no-store" }
+    { cache: "no-store", headers: { Cookie: cookies().toString() } }
   );
 
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
 
@@ -18,7 +17,6 @@ async function getData(userId) {
 
 export default async function Profile({ params }) {
   const { data } = await getData(params.userId);
-  console.log(data);
   const user = data.userData[0];
   const blogs = data.blogs;
 

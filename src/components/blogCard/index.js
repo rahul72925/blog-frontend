@@ -6,10 +6,10 @@ import { EditIcon } from "@/assets/icons/editIcon";
 import { useStore } from "@/store/useStore";
 import axios from "axios";
 import moment from "moment";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useSearchParams } from "next/navigation";
+import {} from "next/navigation";
 
 export const BlogCard = ({ blog, showEditIcon = false }) => {
   const [isLiked, setIsLiked] = useState(blog.is_liked);
@@ -18,7 +18,7 @@ export const BlogCard = ({ blog, showEditIcon = false }) => {
     state.handleLike,
     state.userId,
   ]);
-  const searchParams = useSearchParams();
+  const { userId: paramsUserId } = useParams();
 
   const router = useRouter();
 
@@ -42,6 +42,14 @@ export const BlogCard = ({ blog, showEditIcon = false }) => {
   const handleEditIconClick = () => {
     router.push(`/manage-blog/${blog.id}`);
   };
+
+  const handleUserClick = () => {
+    if (paramsUserId === blog.userId) {
+      return;
+    }
+    router.push(`/profile/${blog.user_id}`);
+  };
+
   return (
     <div className="mx-4 border border-slate-300 p-4 rounded-lg mb-4">
       <div className="flex">
@@ -52,7 +60,7 @@ export const BlogCard = ({ blog, showEditIcon = false }) => {
             {blog.username.charAt(0).toUpperCase()}
           </div>
         )}
-        <div className="px-4">
+        <div className="px-4" onClick={handleUserClick}>
           <span className="cursor-pointer">{blog.username}</span>
           <br />
           <span className="text-xs italic">
@@ -100,7 +108,7 @@ export const BlogCard = ({ blog, showEditIcon = false }) => {
               </span>
             </div>
           )}
-          {showEditIcon && searchParams.get("userId") === blog.userId && (
+          {showEditIcon && paramsUserId === blog.user_id && (
             <div
               className="flex items-center px-2 cursor-pointer"
               onClick={handleEditIconClick}
