@@ -1,8 +1,10 @@
+"use client";
+
 import axios from "axios";
 import { create } from "zustand";
 import jwt from "jsonwebtoken";
 
-export const useStore = create((set) => ({
+export const useStore = create((set, get) => ({
   isAuthenticated: false,
   isAuthenticating: true,
   userId: null,
@@ -13,7 +15,7 @@ export const useStore = create((set) => ({
     }
     localStorage.setItem("token", token);
     var decoded = jwt.decode(token);
-
+    console.log("decoded", decoded);
     return set(() => ({
       isAuthenticated: true,
       isAuthenticating: false,
@@ -34,6 +36,23 @@ export const useStore = create((set) => ({
       })
       .catch((error) => {
         console.log("logout error", error);
+      });
+  },
+  handleLike: async (blogId, successCB, failureCB) => {
+    if (!get().isAuthenticated) {
+      return alert("Please login!");
+    }
+    axios({
+      method: "POST",
+      url: `${process.env.NEXT_PUBLIC_SERVER_URL}/api/blog/like?blogId=${blogId}`,
+      withCredentials: true,
+    })
+      .then((res) => {
+        successCB();
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+        failureCB();
       });
   },
 }));

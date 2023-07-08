@@ -1,18 +1,26 @@
 import { BlogCreateIcon, Logout, ProfileIcon } from "@/assets";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 export const UserIconForHeader = ({ handleCreateBlog }) => {
-  const [userData, logout] = useStore((state) => [
+  const [userData, logout, userId] = useStore((state) => [
     state.userData,
     state.logout,
+    state.userId,
   ]);
+
+  const showDetailsRef = useRef();
 
   const router = useRouter();
 
   const [showDetail, setShowDetail] = useState(false);
+
+  useOnClickOutside(showDetailsRef, () => {
+    setShowDetail(false);
+  });
 
   const handleClick = () => {
     setShowDetail(!showDetail);
@@ -23,6 +31,10 @@ export const UserIconForHeader = ({ handleCreateBlog }) => {
       router.push("/");
       toast.success("Logout successfully");
     });
+  };
+
+  const handleMyProfileClick = () => {
+    router.push(`/profile/${userId}`);
   };
 
   return (
@@ -38,8 +50,14 @@ export const UserIconForHeader = ({ handleCreateBlog }) => {
         </div>
       )}
       {showDetail && (
-        <div className="absolute w-52 h-36 md:w-36 md:h-28 z-50 bg-slate-50 top-12 right-3 rounded drop-shadow-md p-4">
-          <div className="flex cursor-pointer mb-4 ">
+        <div
+          className="absolute w-52 h-36 md:w-36 md:h-28 z-50 bg-slate-50 top-12 right-3 rounded drop-shadow-md p-4"
+          ref={showDetailsRef}
+        >
+          <div
+            className="flex cursor-pointer mb-4 "
+            onClick={handleMyProfileClick}
+          >
             <ProfileIcon />
             <span className="text-md text-slate-700 ml-1  hover:underline">
               My Profile
