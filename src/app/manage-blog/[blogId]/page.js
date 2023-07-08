@@ -134,7 +134,11 @@ export default function CreateBlog({ params }) {
     <main className="m-4">
       <header className="flex items-center mb-4">
         <label className="mr-4 text-xl">Title:</label>
-        <InputFiled value={blogData.title} />
+        <InputFiled
+          value={blogData.title}
+          onChange={handleOnChange}
+          name="title"
+        />
       </header>
       <section className="mb-4">
         <div>
@@ -171,21 +175,32 @@ export default function CreateBlog({ params }) {
         <RichTextEditor ref={richTextRef} value={blogData?.post} />
       </section>
       <footer className="flex justify-end">
-        <Button
-          variant="outline"
-          onClick={onSaveDraftClick}
-          isLoading={loadingState.saveDraftBtnDisabled}
-        >
-          Save Draft
-        </Button>
-        <Button
-          className="ml-4"
-          onClick={onPublishClick}
-          isLoading={loadingState.publishBtnDisabled}
-        >
-          {" "}
-          Publish
-        </Button>
+        {blogData.is_published ? (
+          <Button
+            onClick={onPublishClick}
+            isLoading={loadingState.saveDraftBtnDisabled}
+          >
+            Update
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant="outline"
+              onClick={onSaveDraftClick}
+              isLoading={loadingState.saveDraftBtnDisabled}
+            >
+              Save Draft
+            </Button>
+            <Button
+              className="ml-4"
+              onClick={onPublishClick}
+              isLoading={loadingState.publishBtnDisabled}
+            >
+              {" "}
+              Publish
+            </Button>
+          </>
+        )}
       </footer>
     </main>
   );
