@@ -1,3 +1,4 @@
+"use client";
 import { BlogCreateIcon, Logout, ProfileIcon } from "@/assets";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useStore } from "@/store/useStore";

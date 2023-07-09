@@ -44,7 +44,7 @@ export const BlogCard = ({ blog, showEditIcon = false }) => {
   };
 
   const handleUserClick = () => {
-    if (paramsUserId === blog.userId) {
+    if (paramsUserId === blog.user_id) {
       return;
     }
     router.push(`/profile/${blog.user_id}`);
@@ -108,7 +108,7 @@ export const BlogCard = ({ blog, showEditIcon = false }) => {
               </span>
             </div>
           )}
-          {showEditIcon && paramsUserId === blog.user_id && (
+          {showEditIcon && userId === blog.user_id && (
             <div
               className="flex items-center px-2 cursor-pointer"
               onClick={handleEditIconClick}
