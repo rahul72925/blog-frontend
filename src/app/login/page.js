@@ -13,6 +13,7 @@ export default function Login() {
   const login = useStore((state) => state.login);
 
   const [currentLoginBy, setCurrentLoginBy] = useState("username");
+  const [showPassword, setShowPassword] = useState(false);
   const [cred, setCred] = useState({
     fieldValue: "",
     password: "",
@@ -64,7 +65,9 @@ export default function Login() {
   const handleCreateNewAccount = () => {
     router.push("/signup");
   };
-
+  const handleShowPasswordClick = () => {
+    setShowPassword((prev) => !prev);
+  };
   return (
     <main className="w-full flex justify-center items-center h-auto">
       <section className="w-full rounded-md md:w-1/3 m-4 bg-sky-100 p-4 box-border h-full">
@@ -89,11 +92,19 @@ export default function Login() {
           <br />
           <p className="py-2">password</p>
           <InputFiled
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={cred.password}
             name="password"
             onChange={handleOnChange}
           />
+          <div className="flex justify-end mt-2 ">
+            <span
+              className="italic text-sm cursor-pointer underline"
+              onClick={handleShowPasswordClick}
+            >
+              {!showPassword ? "show" : "hide"} password
+            </span>
+          </div>
           {error && <Warning title={error} />}
         </div>
         <br />
