@@ -16,5 +16,5 @@ body {
 }
 
 .home_blog_content_main {
-  /* height: calc(100vh - 80px); */
+  height: calc(100vh - 80px);
 }
